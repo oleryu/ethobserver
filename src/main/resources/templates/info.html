@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+</head>
+<body>
+<h2>交易详情</h2>
+<div>
+    <ul>
+        <li  >
+            txHash :<span th:text="${txInfo.txHash}"></span>
+        </li>
+        <li  >
+            bolckHash :<span th:text="${txInfo.bolckHash}"></span>
+        </li>
+        <li  >
+            blockNumber :<span th:text="${txInfo.blockNumber}"></span>
+        </li>
+        <li  >
+            address :<span th:text="${txInfo.address}"></span>
+        </li>
+        <li  >
+            fromAddress :<span th:text="${txInfo.fromAddress}"></span>
+        </li>
+        <li  >
+            creates :<span th:text="${txInfo.creates}"></span>
+        </li>
+        <li  >
+            gas :<span th:text="${txInfo.gas}"></span>
+        </li>
+        <li  >
+            gasPrice :<span th:text="${txInfo.gasPrice}"></span>
+        </li>
+        <li  >
+            nonce :<span th:text="${txInfo.nonce}"></span>
+        </li>
+        <li  >
+            value :<span th:text="${txInfo.value}"></span>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
