@@ -16,4 +16,4 @@ jar_type=${args[2]}
 
 
 
-nohup java -Dserver.port=8998 -jar ../lib/${jar_name}-${jar_ver}-${jar_type}.jar --spring.config.location=file:${PROJECT_DIR}/app/conf/application-${jar_type}.properties > ../logs/${jar_name}.log 2>&1 &
+nohup java -Dserver.port=8996 -jar ../lib/${jar_name}-${jar_ver}-${jar_type}.jar --spring.config.location=file:${PROJECT_DIR}/app/conf/application-${jar_type}.properties > ../logs/${jar_name}.log 2>&1 &

@@ -14,7 +14,7 @@ pfs_end=`echo ${pfs_num}|awk '{print $2}'`
 #echo $pfs_start
 #echo $pfs_end
 
-pf_num=`cat $pomxml|sed -n ''"$pfs_start"','"$pfs_end"'p'|sed -n '/^[ ]*<[/]*profile>$/='|sed ':a ; N;s/\n/ / ; t a ; '`
+pf_num=`cat $pomxml|sed -n ''"$pfs_start"','"$pfs_end"'p'|sed -n '/^[\t ]*<[/]*profile>$/='|sed ':a ; N;s/\n/ / ; t a ; '`
 
 #pf_arr=($pf_num)
 
@@ -36,7 +36,7 @@ do
 
     #echo $start_num" -> "$end_num
 
-    cat $pomxml|sed -n ''"$start_num"','"$end_num"'p'|sed 's/[ ]*\(.*\)[ ]*/\1/g'|sed ":a;N;s/\n//g;ta"
+    cat $pomxml|sed -n ''"$start_num"','"$end_num"'p'|sed 's/[\t ]*\(.*\)[\t ]*/\1/g'|sed ":a;N;s/\n//g;ta"
 
     if [ "$pf_num" == "$pf_num_end" ]
     then
