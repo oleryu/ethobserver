@@ -61,6 +61,6 @@ cur_time=`date "+%Y%m%d%H%M%S"`
     done
 #fi
 
-cp ${PROJECT_DIR}/wallet-boot/target/${finalName}-${select_version}-${select_type}.jar ${PROJECT_DIR}/app/lib/
+cp ${PROJECT_DIR}/target/${finalName}-${select_version}-${select_type}.jar ${PROJECT_DIR}/app/lib/
 
-cp ${PROJECT_DIR}/wallet-boot/${select_conf} ${PROJECT_DIR}/app/conf/${select_conf}
+cp ${PROJECT_DIR}/${select_conf} ${PROJECT_DIR}/app/conf/${select_conf}
