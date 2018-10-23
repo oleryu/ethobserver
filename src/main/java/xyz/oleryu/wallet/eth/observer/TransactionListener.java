@@ -30,43 +30,48 @@ public class TransactionListener implements ApplicationRunner {
     private TxOutputRecordService txOutputRecordService;
 
     @Override
-    public void run(ApplicationArguments var1) throws Exception{
+    public void run(ApplicationArguments var1) {
         System.out.println("TransactionListener!");
-//        System.out.println("|ETH_RPC_URL|: " + rpcUrl);
-//        Web3j web3j = Web3j.build(new HttpService("http://192.168.10.102:8545"));
-        Web3j web3j = Web3j.build(new HttpService(rpcUrl));
-        System.out.println(web3j);
+        try {
+            Web3j web3j = Web3j.build(new HttpService(rpcUrl));
 
-        //获得到transactionHash后就可以到以太坊的网站上查询这笔交易的状态了
-        web3j.transactionObservable().subscribe(tx -> {
-            if(null == tx) {
-                return;
-            }
-            //
-            String txHash = tx.getHash();
-            String bolckHash = tx.getBlockHash();
-            String fromAddress = tx.getFrom();
-            String toAddress = tx.getTo();
-            BigInteger blockNumber = tx.getBlockNumber();
-            String creates = tx.getCreates();
+            //获得到transactionHash后就可以到以太坊的网站上查询这笔交易的状态了
+            web3j.transactionObservable().subscribe(tx -> {
+                if(null == tx) {
+                    return;
+                }
+                //
+                String txHash = tx.getHash();
+                String bolckHash = tx.getBlockHash();
+                String fromAddress = tx.getFrom();
+                String toAddress = tx.getTo();
+                BigInteger blockNumber = tx.getBlockNumber();
+                String creates = tx.getCreates();
 
-            BigInteger gas = tx.getGas();
-            BigInteger gasPrice = tx.getGasPrice();
+                BigInteger gas = tx.getGas();
+                BigInteger gasPrice = tx.getGasPrice();
 
-            BigInteger nonce = tx.getNonce();
+                BigInteger nonce = tx.getNonce();
 
-            BigInteger value = tx.getValue();
-            //
+                BigInteger value = tx.getValue();
+                //
 
-            TxInputRecord txInputRecord  = new TxInputRecord(txHash,
-                    bolckHash,toAddress,fromAddress,blockNumber,creates,gas,gasPrice,nonce,value);
-            TxOutputRecord txOuutRecord  = new TxOutputRecord(txHash,
-                    bolckHash,fromAddress,toAddress,blockNumber,creates,gas,gasPrice,nonce,value);
+                TxInputRecord txInputRecord  = new TxInputRecord(txHash,
+                        bolckHash,toAddress,fromAddress,blockNumber,creates,gas,gasPrice,nonce,value);
+                TxOutputRecord txOuutRecord  = new TxOutputRecord(txHash,
+                        bolckHash,fromAddress,toAddress,blockNumber,creates,gas,gasPrice,nonce,value);
 
-            //存入数据库
-            txInputRecordService.insert(txInputRecord);
-            txOutputRecordService.insert(txOuutRecord);
+                System.out.println(txInputRecord.toString());
+                System.out.println(txOuutRecord.toString());
+                //存入数据库
+                txInputRecordService.insert(txInputRecord);
+                txOutputRecordService.insert(txOuutRecord);
 
-        });
+            });
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
     }
 }

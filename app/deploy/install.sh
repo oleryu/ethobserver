@@ -1,12 +1,12 @@
 #/bin/bash
 
-AP_BOOT_DIR=/opt/wallet_root/wallet-sys/wallet-boot
 
-AP_MAIN_POM=/opt/wallet_root/wallet-sys/wallet-boot/pom.xml
+AP_BOOT_DIR=/opt/wallet_root/ethobserver
 
-PROJECT_DIR=/opt/wallet_root/wallet-sys
-DESPOLY_ROOT=${PROJECT_DIR}/app/desploy
+AP_MAIN_POM=${AP_BOOT_DIR}/pom.xml
 
+PROJECT_DIR=/opt/wallet_root/ethobserver
+DESPOLY_ROOT=${PROJECT_DIR}/app/deploy
 
 finalName=`cat $AP_MAIN_POM|grep "<finalName>"|sed 's/.*<finalName>\(.*\).*.${deploy.version}.*<\/finalName>/\1/g'`
 

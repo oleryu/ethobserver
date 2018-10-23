@@ -127,9 +127,6 @@
 				<deploy.type>prod</deploy.type>
 				<deploy.version>1.0.0.1</deploy.version>
 			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 			<build>
 				<filters>
 					<filter>application-prod.properties</filter>
@@ -147,6 +144,9 @@
 					<filter>application-dev.properties</filter>
 				</filters>
 			</build>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 		</profile>
 	</profiles>
 

@@ -49,4 +49,20 @@ public class TxOutputRecord {
         this.nonce = nonce;
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "TxOutputRecord{" +
+                "txHash='" + txHash + '\'' +
+                ", bolckHash='" + bolckHash + '\'' +
+                ", blockNumber=" + blockNumber +
+                ", address='" + address + '\'' +
+                ", toAddress='" + toAddress + '\'' +
+                ", creates='" + creates + '\'' +
+                ", gas=" + gas +
+                ", gasPrice=" + gasPrice +
+                ", nonce=" + nonce +
+                ", value=" + value +
+                '}';
+    }
 }
