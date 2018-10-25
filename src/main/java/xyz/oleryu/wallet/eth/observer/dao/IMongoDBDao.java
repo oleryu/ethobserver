@@ -7,6 +7,6 @@ import java.util.List;
  */
 public interface IMongoDBDao<T> {
     void insert(T c);
-    T findRecordByTxHash(String txHash, Class<T> clazz);
-    List<T> findRecordListByTxHash(Class<T> clazz);
+    T getTxRecordByHash(String txHash, Class<T> clazz);
+    List<T> lstTxRecord(Class<T> clazz,String address,int flag);
 }
