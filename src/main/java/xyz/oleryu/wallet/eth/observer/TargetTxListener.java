@@ -1,5 +1,6 @@
 package xyz.oleryu.wallet.eth.observer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -10,14 +11,18 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 import xyz.oleryu.wallet.eth.observer.service.TxRecordService;
 
+import java.io.IOException;
 import java.math.BigInteger;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 /**
  * 观察 链上交易
  * @ oleryu.xyz
  */
 @Component
-//@ConfigurationProperties(prefix = "eth")
+@Slf4j
 @Order(value = 1)
 public class TargetTxListener implements ApplicationRunner {
 
@@ -28,17 +33,62 @@ public class TargetTxListener implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments var1) {
-        System.out.println("TransactionListener Start!");
+        log.info("TargetTxListenerStart!");
+        //校验，校验
+        //if() {}
+        subscribeTx();
+//        try {
+//            int istartpos = rpcUrl.indexOf("//");
+//            int iendpos = rpcUrl.lastIndexOf(":");
+//            String hostname = rpcUrl.substring(istartpos+2,iendpos);
+//            Integer port = Integer.parseInt(rpcUrl.substring(iendpos+1));
+//            while(true) {
+//                try {
+//                    if(testTarget(hostname,port,1000)  != 0) {
+//
+//                    }
+//                    Thread.sleep(1000);
+//                } catch(Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        } catch(Exception e) {
+//            log.info("TargetTxListener Exception" + e.getMessage());
+//            e.printStackTrace();
+//        } finally {
+//            log.info("TargetTxListener Finally!");
+//        }
+    }
+
+    public static int testTarget(String hostname,Integer port,Integer timeout){
+        log.info("testTarget["+hostname+":"+port+"],timeout="+timeout);
+        try {
+            Socket server = new Socket();
+            InetSocketAddress address = new InetSocketAddress(hostname,port);
+            server.connect(address, timeout);
+            server.close();
+            server.close();
+            return 0;
+        }catch (UnknownHostException e) {
+            return 1;
+        } catch (IOException e) {
+            return 2;
+        }
+    }
+
+    private void subscribeTx() {
         try {
             Web3j web3j = Web3j.build(new HttpService(rpcUrl));
 
             //获得到transactionHash后就可以到以太坊的网站上查询这笔交易的状态了
+
             web3j.transactionObservable().subscribe(tx -> {
-                System.out.println("receive >" + tx.getHash());
+                log.info("transactionObservable recv>"+tx);
                 if(null == tx) {
                     return;
                 }
                 //
+
                 String txHash = tx.getHash();
                 String bolckHash = tx.getBlockHash();
                 String fromAddress = tx.getFrom();
@@ -57,24 +107,14 @@ public class TargetTxListener implements ApplicationRunner {
                 TxRecord txRecord = new TxRecord(txHash,
                         bolckHash,toAddress,fromAddress,blockNumber,creates,gas,gasPrice,nonce,value);
 
-                System.out.println(txRecord.toString());
+                log.info("transactionObservable txRecord>"+txRecord.toString());
 
                 txInputRecordService.insert(txRecord);
 
             });
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+            log.error("transactionObservable recv " + e.getMessage());
+            e.printStackTrace();
         }
-
-//        while(true) {
-//            try {
-//                Thread.sleep(500);
-//            } catch(Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-
-
     }
 }
