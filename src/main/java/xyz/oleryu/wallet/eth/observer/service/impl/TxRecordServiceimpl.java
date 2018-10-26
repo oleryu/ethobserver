@@ -3,6 +3,7 @@ package xyz.oleryu.wallet.eth.observer.service.impl;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.oleryu.wallet.eth.observer.PendingTxRecord;
 import xyz.oleryu.wallet.eth.observer.TxRecord;
 import xyz.oleryu.wallet.eth.observer.dao.IMongoDBDao;
 import xyz.oleryu.wallet.eth.observer.service.TxRecordService;
@@ -22,6 +23,14 @@ public class TxRecordServiceimpl implements TxRecordService {
 //        txInputRecordDao.insert(txRecord);
         iMongoDBDao.insert(txRecord);
     }
+
+    public void insertPending(PendingTxRecord txRecord){
+
+//        txInputRecordDao.insert(txRecord);
+        iMongoDBDao.insert(txRecord);
+    }
+
+
     public TxRecord getTxRecordByHash(String txHash){
         return (TxRecord)iMongoDBDao.getTxRecordByHash(txHash,TxRecord.class);
     }
