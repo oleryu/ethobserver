@@ -66,6 +66,15 @@ public class TargetTxListener implements ApplicationRunner {
             System.out.println(e.getMessage());
         }
 
+//        while(true) {
+//            try {
+//                Thread.sleep(500);
+//            } catch(Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+
 
     }
 }
